@@ -3,8 +3,12 @@ import { getCollection } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
 const base = import.meta.env.BASE_URL;
-
 const pubEntries = await getCollection("publications");
+
+const formatBold = (text) => {
+  if (!text) return "";
+  return text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+};
 
 const sorted = pubEntries.sort((a, b) => {
   if (b.data.year !== a.data.year) return b.data.year - a.data.year;
@@ -18,32 +22,138 @@ const grouped = sorted.reduce((acc, pub) => {
   return acc;
 }, {});
 
-const years = Object.keys(grouped)
-  .map(Number)
-  .sort((a, b) => b - a);
+const years = Object.keys(grouped).map(Number).sort((a, b) => b - a);
 ---
 
 <style>
   :global(html) { font-family: Arial, Helvetica, sans-serif; }
   :global(body) { background: #f6f7fb; margin: 0; color: rgba(0,0,0,.92); }
-  .wrap{ max-width: 1240px; margin: 0 auto; padding: 2.2rem 1.25rem 3.2rem 1.25rem; }
-  .hero{ border-radius: 28px; padding: 2.5rem 2.2rem; background: radial-gradient(1200px 520px at 12% 10%, rgba(99,102,241,.22), transparent 60%), radial-gradient(900px 520px at 90% 0%, rgba(56,189,248,.18), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.80)); border: 1px solid rgba(0,0,0,.06); box-shadow: 0 18px 46px rgba(0,0,0,.09); }
-  .kicker{ font-size: .92rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(0,0,0,.55); margin: 0 0 .55rem 0; }
-  h1{ font-size: 3rem; line-height: 1.04; margin: 0 0 .85rem 0; letter-spacing: -0.02em; }
-  .lead{ font-size: 1.16rem; line-height: 1.62; color: rgba(0,0,0,.74); max-width: 75ch; margin: 0; }
-  .ctaRow{ display:flex; flex-wrap:wrap; gap:.75rem; margin-top: 1.25rem; }
-  .btn{ display:inline-flex; align-items:center; justify-content:center; padding: .72rem 1.05rem; border-radius: 999px; border: 1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.90); color: rgba(0,0,0,.86); text-decoration:none; font-size: 1.02rem; font-weight: 700; }
-  .btn.primary{ background: rgba(0,0,0,.92); color: rgba(255,255,255,.95); border-color: rgba(0,0,0,.92); }
-  .yearSection{ margin-top: 1.35rem; }
-  .yearHeader{ margin: 0 0 .7rem 0; font-size: 1.6rem; letter-spacing: -0.01em; }
-  .pubList{ display:grid; gap: .95rem; }
-  .pubCard{ border-radius: 22px; background: rgba(255,255,255,.94); border: 1px solid rgba(0,0,0,.06); box-shadow: 0 12px 28px rgba(0,0,0,.07); padding: 1.1rem 1.15rem 1rem 1.15rem; }
-  .pubTitle{ margin: 0; font-size: 1.08rem; line-height: 1.45; font-weight: 800; }
-  .pubTitle a{ color: rgba(0,0,0,.92); text-decoration: none; }
-  .pubTitle a:hover{ text-decoration: underline; }
-  .pubAuthors{ margin: .35rem 0 0 0; font-size: .98rem; line-height: 1.55; color: rgba(0,0,0,.72); }
-  .pubMeta{ margin: .35rem 0 0 0; font-size: .95rem; color: rgba(0,0,0,.58); }
-  @media (max-width: 640px){ .wrap{ padding: 1.6rem 1rem 2.8rem 1rem; } .hero{ padding: 2.1rem 1.4rem; } h1{ font-size: 2.3rem; } .lead{ font-size: 1.08rem; } }
+
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2.2rem 1.25rem 3.2rem 1.25rem;
+  }
+
+  .hero {
+    border-radius: 28px;
+    padding: 2.5rem 2.2rem;
+    background:
+      radial-gradient(1200px 520px at 12% 10%, rgba(99,102,241,.22), transparent 60%),
+      radial-gradient(900px 520px at 90% 0%, rgba(56,189,248,.18), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.80));
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 18px 46px rgba(0,0,0,.09);
+    margin-bottom: 2rem;
+  }
+
+  .kicker {
+    font-size: .92rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,.55);
+    margin: 0 0 .55rem 0;
+  }
+
+  h1 {
+    font-size: 3rem;
+    line-height: 1.04;
+    margin: 0 0 .85rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .lead {
+    font-size: 1.16rem;
+    line-height: 1.62;
+    color: rgba(0,0,0,.74);
+    max-width: 75ch;
+    margin: 0;
+  }
+
+  .ctaRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: 1.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .72rem 1.05rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.10);
+    background: rgba(0,0,0,.92);
+    color: rgba(255,255,255,.95);
+    text-decoration: none;
+    font-size: 1.02rem;
+    font-weight: 700;
+  }
+
+  .yearSection {
+    margin-top: 1.35rem;
+  }
+
+  .yearHeader {
+    margin: 0 0 .7rem 0;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pubList {
+    display: grid;
+    gap: .95rem;
+  }
+
+  .pubCard {
+    border-radius: 22px;
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,.07);
+    padding: 1.1rem 1.15rem 1rem 1.15rem;
+  }
+
+  .pubTitle {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.45;
+    font-weight: 800;
+  }
+
+  .pubTitle a {
+    color: rgba(0,0,0,.92);
+    text-decoration: none;
+  }
+
+  .pubTitle a:hover {
+    text-decoration: underline;
+  }
+
+  .pubAuthors {
+    margin: .35rem 0 0 0;
+    font-size: .98rem;
+    line-height: 1.55;
+    color: rgba(0,0,0,.72);
+  }
+
+  .pubAuthors :global(strong) {
+    color: rgba(0,0,0,0.9);
+    font-weight: 700;
+  }
+
+  .pubMeta {
+    margin: .35rem 0 0 0;
+    font-size: .95rem;
+    color: rgba(0,0,0,.58);
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 1.6rem 1rem 2.8rem 1rem; }
+    .hero { padding: 2.1rem 1.4rem; }
+    h1 { font-size: 2.3rem; }
+    .lead { font-size: 1.08rem; }
+  }
 </style>
 
 <SiteLayout title="Publications | Systems Structural Biology Group">
@@ -55,8 +165,14 @@ const years = Object.keys(grouped)
         This page highlights publications connected to the Systems Structural Biology Group.
         For the most complete and continuously updated list, use the Google Scholar profile link below.
       </p>
+
       <div class="ctaRow">
-        <a class="btn primary" href="https://scholar.google.com/citations?hl=en&user=UnRHyFYAAAAJ" target="_blank" rel="noopener noreferrer">
+        <a
+          class="btn"
+          href="https://scholar.google.com/citations?hl=en&user=UnRHyFYAAAAJ"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Full list on Google Scholar
         </a>
       </div>
@@ -71,7 +187,9 @@ const years = Object.keys(grouped)
               <h3 class="pubTitle">
                 <a href={pub.link} target="_blank" rel="noopener noreferrer">{pub.title}</a>
               </h3>
-              <p class="pubAuthors">{pub.authors}</p>
+              
+              <p class="pubAuthors" set:html={formatBold(pub.authors)} />
+              
               <p class="pubMeta">
                 {pub.venue} {pub.type && `· ${pub.type}`} {pub.note && `· ${pub.note}`}
               </p>
