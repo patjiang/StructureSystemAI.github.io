@@ -1,46 +1,23 @@
-# Astro Starter Kit: Basics
+## Systems Structural Biology Group Website
 
-```sh
-npm create astro@latest -- --template basics
-```
+This repository contains the source code and content for the lab website, built using the Astro framework.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Website Organization
 
-## 🚀 Project Structure
+The site is organized into a modular structure where code and content are strictly separated:
 
-Inside of your Astro project, you'll see the following folders and files:
+  * **src/content/**: Contains Markdown files that drive the data-heavy portions of the site. This includes people profiles, news articles, research projects, and publications.
+  * **src/pages/**: Defines the website routes and layouts.
+  * **src/layouts/**: Stores the global page wrappers and reusable UI shells.
+  * **src/lib/**: Contains utility scripts, including path normalization and base URL handling.
+  * **public/uploads/**: The central directory for all images, headshots, and media assets referenced in Markdown files.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+### Contributing Content
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+To add or update news, people, projects, or publications, refer to the detailed instructions in the content guide:
 
-## 🧞 Commands
+[View Content Addition Guide](src/content/README.md)
 
-All commands are run from the root of the project, from a terminal:
+### Development
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The configuration for the Astro site, including base paths and deployment settings, is located in **astro.config.mjs**. Node.js dependencies are managed via **package.json**.
