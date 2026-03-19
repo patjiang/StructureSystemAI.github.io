@@ -9,7 +9,7 @@
 
 ### News Entries
 **Path:** `src/content/news/`
-**Filename:** `YYYY-MM-DD-slug.md`
+**Filename:** `YYYY-MM-DD-article-name.md`
 
 | Field | Purpose |
 | :--- | :--- |
@@ -77,7 +77,7 @@ links:
 
 ### Project Entries
 **Path:** `src/content/projects/`  
-**Filename:** `project-slug.md`
+**Filename:** `project-name.md`
 
 | Field | Purpose |
 | :--- | :--- |
@@ -112,5 +112,38 @@ updates:
   - "Recent milestone one"
   - "Recent milestone two"
 share_to_x: false
+---
+```
+
+---
+
+### Publication Entry Guide
+
+### 📚 Publication Entries
+**Path:** `src/content/publications/`  
+**Filename:** `yyyy-paper-name.md`
+
+| Field | Purpose |
+| :--- | :--- |
+| `title` | Full title of the paper. |
+| `authors` | List of authors (can include bolding for lab members). |
+| `year` | Four-digit year (numeric). |
+| `venue` | Journal name, Conference, or Preprint server. |
+| `type` | e.g., "Journal Article", "Review", "Preprint". |
+| `note` | Optional extra info (e.g., "Co-first author"). |
+| `link` | URL to the publisher or PDF. |
+| `share_to_x`| Default is `true`. |
+
+**Template:**
+```markdown
+---
+title: "Paper Title"
+authors: "Author A, Author B, and **Singharoy A.**"
+year: 2026
+venue: "Nature Communications"
+type: "Journal Article"
+note: "Selected for Cover"
+link: "https://doi.org/..."
+share_to_x: true
 ---
 ```
