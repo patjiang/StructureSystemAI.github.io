@@ -20,7 +20,7 @@ team:
     role: "Graduate Student"
     href: "people#patrick-jiang"
   - name: "Paarth Batra"
-    role: "Student Worker"
+    role: "ML Engineer"
     href: "people#paarth-batra"
 updates:
   - "Finished generation of binders"
