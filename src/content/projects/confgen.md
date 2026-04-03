@@ -22,11 +22,6 @@ team:
   - name: "Patrick Jiang"
     role: "Graduate Student"
     href: "people#patrick-jiang"
-  - name: "Paarth Batra"
-    role: "Student Worker"
-    href: "people#paarth-batra"
 updates:
-  - "Finished generation of binders"
-  - "Starting large-scale BD simulations for validation"
-  - "Setting up wet-lab for protein purification"
+  - "Generated new datasets with MELD and did some energy calculations"
 ---
