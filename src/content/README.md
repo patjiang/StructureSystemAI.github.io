@@ -66,12 +66,15 @@ links:
 ---
 ```
 
+---
+
 ## Project Entry Guide
 
-### Assets & Images
-* **Location:** Save to `public/uploads/`.
-* **Reference:** Use `/uploads/filename.ext` in Markdown.
-* **Format:** Use `.webp` or `.jpg` (under 1MB).
+### Assets & Media
+* **Location:** Save all media to `public/uploads/`.
+* **Images:** Use `.webp` or `.jpg` (under 1MB).
+* **Videos:** Use `.mp4` (keep files small/compressed).
+* **Reference:** Use `/uploads/filename.ext` in the frontmatter.
 
 ---
 
@@ -83,14 +86,16 @@ links:
 | :--- | :--- |
 | `title` | Full name of the research project. |
 | `status` | `Active` or `Completed`. |
-| `phase` | Current stage (e.g., "Data collection", "Initial modeling"). |
+| `phase` | Current stage (e.g., "Data collection", "Modeling"). |
 | `summary` | 1-2 paragraph project overview. |
+| `thumbnail` | **New:** Path to image (used as card preview or video poster). |
+| `video` | **New:** Path to `.mp4` file for the card's media player. |
 | `tags` | Array of research areas or technologies. |
 | `timeline` | Years of activity (e.g., "2025–2027"). |
 | `lead` | Name of the project lead or PI. |
-| `team` | Array of objects with `name`, `role`, and `href` (e.g., `people#id`). |
+| `team` | Array of objects: `name`, `role`, and `href` (e.g., `people#id`). |
 | `updates` | List of recent progress milestones. |
-| `share_to_x`| Set `true` or `false`. |
+| `share_to_x` | Set `true` or `false`. |
 
 **Template:**
 ```markdown
@@ -99,9 +104,11 @@ title: "Project Title"
 status: "Active"
 phase: "Current Phase"
 summary: "Project description goes here."
+thumbnail: "/uploads/project-preview.jpg"
+video: "/uploads/molecular-simulation.mp4"
 tags:
-  - "Topic 1"
-  - "Topic 2"
+  - "Structural Biology"
+  - "MD Simulations"
 timeline: "2026–2028"
 lead: "Lead Name"
 team:
@@ -116,6 +123,10 @@ share_to_x: false
 ```
 
 ---
+
+### Implementation Note
+* **Thumbnail as Poster:** If you provide both a `video` and a `thumbnail`, the image will serve as the "Poster" (the static frame shown before the video loads or plays).
+* **Fallback:** If no video is provided, the template will simply display the `thumbnail` as a static image.
 
 ### Publication Entry Guide
 
