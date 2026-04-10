@@ -26,6 +26,8 @@ const projects = defineCollection({
     status: z.enum(["Active", "Completed"]).default("Active"),
     phase: z.string(),
     summary: z.string(),
+    video: z.string().optional(),
+    thumbnail: z.string().optional(),
     tags: z.array(z.string()).optional(),
     timeline: z.string(),
     lead: z.string(),
