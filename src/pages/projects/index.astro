@@ -1,73 +1,13 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { withBase as withSiteBase } from "../../lib/site";
+import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL;
-
 const withBase = (path = "") => withSiteBase(base, path);
 
-const projects = [
-  {
-    id: "coordination-integrity",
-    title: "Coordination Integrity Monitoring for Human–AI Teams",
-    status: "Active",
-    phase: "Model development",
-    summary:
-      "A live research effort focused on monitoring coordination integrity in human–AI teams under uncertainty, with emphasis on telemetry analysis, nonlinear markers, and decision support.",
-    tags: ["Human–AI teaming", "Telemetry", "Nonlinear dynamics"],
-    timeline: "2026–2028",
-    lead: "Abhishek Singharoy",
-    team: [
-      { name: "Abhishek Singharoy", role: "Principal Investigator", href: "people#abhishek-singharoy" },
-      { name: "Caleb James Armstrong", role: "Research Scientist", href: "people#caleb-james-armstrong" },
-      { name: "Chun Kit Chan", role: "Postdoctoral Research Scholar", href: "people#chun-kit-chan" },
-    ],
-    updates: [
-      "Streaming telemetry preprocessing pipeline finalized.",
-      "Initial anomaly signatures benchmarked across simulated conditions.",
-    ],
-  },
-  {
-    id: "mr-beam",
-    title: "Mr. BEAM Drowsiness Monitoring Tool",
-    status: "Active",
-    phase: "Data collection",
-    summary:
-      "An applied machine learning project to support drowsiness monitoring through multimodal sensing, predictive analytics, and adaptive feedback design.",
-    tags: ["Machine learning", "Driver readiness", "Wearables"],
-    timeline: "2025–2027",
-    lead: "Caleb James Armstrong",
-    team: [
-      { name: "Caleb James Armstrong", role: "Project Lead", href: "people#caleb-james-armstrong" },
-      { name: "Abhishek Singharoy", role: "Principal Investigator", href: "people#abhishek-singharoy" },
-      { name: "Graduate Research Team", role: "Modeling and validation", href: "people" },
-    ],
-    updates: [
-      "Ground-truth workflow refined for pilot participants.",
-      "Feature extraction and readiness modeling currently underway.",
-    ],
-  },
-  {
-    id: "mhelp",
-    title: "mHelp Digital Health Platform",
-    status: "Active",
-    phase: "Validation and deployment planning",
-    summary:
-      "A digital health initiative combining sensing, self-management support, and predictive analytics to improve stress monitoring and intervention workflows.",
-    tags: ["Digital health", "Stress detection", "Intervention design"],
-    timeline: "2025–2026",
-    lead: "Caleb James Armstrong",
-    team: [
-      { name: "Caleb James Armstrong", role: "Research Scientist", href: "people#caleb-james-armstrong" },
-      { name: "Chun Kit Chan", role: "Computational and ML Support", href: "people#chun-kit-chan" },
-      { name: "Clinical and ML Teams", role: "Clinical implementation and model support", href: "people" },
-    ],
-    updates: [
-      "Daily survey integration and lag-effect modeling in progress.",
-      "Pilot visualizations prepared for outcome review.",
-    ],
-  },
-];
+// Fetching from content collections (Dynamic approach)
+const projectEntries = await getCollection("projects");
 
 const topicDefinitions = [
   {
@@ -129,31 +69,16 @@ const topicSummaries = topicDefinitions.map((topic) => {
 });
 
 const stats = [
-<<<<<<< Updated upstream
-  { label: "Active Projects", value: String(projects.length) },
-  { label: "Research Areas", value: "6+" },
-=======
   { label: "Active Projects", value: String(projectEntries.length) },
   { label: "Research Areas", value: String(topicDefinitions.length) },
->>>>>>> Stashed changes
   { label: "Team Members", value: "10+" },
   { label: "Partner Sites", value: "Multi-site" },
 ];
-
 ---
 
 <style>
   :global(html) { font-family: Arial, Helvetica, sans-serif; }
   :global(body) { background: #f6f7fb; margin: 0; color: rgba(0,0,0,.9); }
-
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(246,247,251,.78);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0,0,0,.06);
-  }
 
   .navWrap {
     max-width: 1240px;
@@ -163,94 +88,6 @@ const stats = [
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: .75rem;
-    text-decoration: none;
-    color: rgba(0,0,0,.92);
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    font-size: 1.08rem;
-    white-space: nowrap;
-  }
-
-  .brandText strong { font-weight: 900; }
-
-  .logoWrap{
-    position: relative;
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    padding: 3px;
-    background:
-      radial-gradient(24px 24px at 30% 20%, rgba(99,102,241,.40), transparent 65%),
-      radial-gradient(28px 28px at 80% 30%, rgba(56,189,248,.35), transparent 60%),
-      radial-gradient(30px 30px at 60% 85%, rgba(16,185,129,.28), transparent 62%),
-      rgba(255,255,255,.60);
-    border: 1px solid rgba(0,0,0,.08);
-    box-shadow: 0 10px 18px rgba(0,0,0,.10);
-    flex: 0 0 auto;
-  }
-
-  .logo{
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    object-fit: cover;
-    display: block;
-    border: 1px solid rgba(0,0,0,.10);
-    background: rgba(255,255,255,.80);
-  }
-
-  .navLinks {
-    display: flex;
-    align-items: center;
-    gap: .35rem;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .navA {
-    text-decoration: none;
-    font-size: 0.98rem;
-    padding: .45rem .72rem;
-    border-radius: 999px;
-    color: rgba(0,0,0,.78);
-    border: 1px solid transparent;
-    transition: background .15s ease, border-color .15s ease, transform .15s ease;
-  }
-
-  .navA:hover {
-    background: rgba(0,0,0,.04);
-    border-color: rgba(0,0,0,.07);
-    transform: translateY(-1px);
-  }
-
-  .navA.active {
-    background: rgba(0,0,0,.06);
-    border-color: rgba(0,0,0,.10);
-    color: rgba(0,0,0,.9);
-    font-weight: 700;
-  }
-
-  .menuBtn {
-    display: none;
-    border: 1px solid rgba(0,0,0,.10);
-    background: rgba(255,255,255,.85);
-    border-radius: 999px;
-    padding: .5rem .75rem;
-    font-size: 0.95rem;
-    cursor: pointer;
-  }
-
-  @media (max-width: 820px) {
-    .menuBtn { display: inline-flex; align-items: center; gap: .45rem; }
-    .navLinks { display: none; width: 100%; margin-top: .75rem; }
-    .navLinks.open { display: flex; }
-    .navWrap { flex-wrap: wrap; align-items: flex-start; }
   }
 
   .wrap {
@@ -301,13 +138,6 @@ const stats = [
     margin: 0;
   }
 
-  .heroButtons {
-    display: flex;
-    gap: .8rem;
-    flex-wrap: wrap;
-    margin-top: 1.2rem;
-  }
-
   .btn {
     display: inline-flex;
     align-items: center;
@@ -316,20 +146,8 @@ const stats = [
     border-radius: 18px;
     text-decoration: none;
     font-weight: 700;
-    font-size: .98rem;
-    border: 1px solid rgba(0,0,0,.10);
-    transition: transform .15s ease, background .15s ease;
-  }
-
-  .btn:hover { transform: translateY(-1px); }
-  .btnPrimary {
     background: #111827;
     color: white;
-    border-color: #111827;
-  }
-  .btnSecondary {
-    background: white;
-    color: #111827;
   }
 
   .statsGrid {
@@ -342,149 +160,31 @@ const stats = [
     border-radius: 22px;
     background: rgba(255,255,255,.94);
     border: 1px solid rgba(0,0,0,.06);
-    box-shadow: 0 10px 24px rgba(0,0,0,.06);
     padding: 1rem;
-  }
-
-  .statLabel {
-    font-size: .92rem;
-    color: rgba(0,0,0,.55);
-    margin: 0 0 .35rem 0;
   }
 
   .statValue {
     font-size: 2rem;
     font-weight: 800;
     margin: 0;
-    letter-spacing: -0.02em;
   }
 
-  .section {
-    margin-top: 1.7rem;
-  }
-
-<<<<<<< Updated upstream
-  .sectionGrid {
-    display: grid;
-    gap: 1.25rem;
-    grid-template-columns: 1.1fr .9fr;
-  }
-
-  .card {
-=======
   .topicMap {
->>>>>>> Stashed changes
     border-radius: 24px;
     background: rgba(255,255,255,.94);
     border: 1px solid rgba(0,0,0,.06);
-    box-shadow: 0 12px 28px rgba(0,0,0,.07);
-<<<<<<< Updated upstream
-    padding: 1.5rem;
-  }
-
-  .cardDark {
-    background: #111827;
-    color: white;
-    border-color: rgba(255,255,255,.06);
-  }
-
-  .sectionKicker {
-    font-size: 0.84rem;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: rgba(0,0,0,.5);
-    margin: 0 0 .45rem 0;
-    font-weight: 700;
-  }
-
-  .cardDark .sectionKicker {
-    color: rgba(255,255,255,.55);
-  }
-
-  .sectionTitle {
-    margin: 0;
-    font-size: 2rem;
-    letter-spacing: -0.02em;
-  }
-
-  .bodyText {
-    margin-top: .9rem;
-    line-height: 1.7;
-    color: rgba(0,0,0,.72);
-    font-size: 1.02rem;
-  }
-
-  .cardDark .bodyText {
-    color: rgba(255,255,255,.8);
-  }
-
-  .miniGrid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .9rem;
-    margin-top: 1rem;
-  }
-
-  .miniCard {
-    background: rgba(0,0,0,.03);
-    border-radius: 18px;
-    padding: 1rem;
-  }
-
-  .miniTitle {
-    margin: 0;
-    font-weight: 700;
-    font-size: .98rem;
-  }
-
-  .miniText {
-    margin: .45rem 0 0 0;
-    color: rgba(0,0,0,.68);
-    line-height: 1.55;
-    font-size: .95rem;
-  }
-
-  .cardDark .miniCard {
-    background: rgba(255,255,255,.06);
-  }
-
-  .cardDark .miniText {
-    color: rgba(255,255,255,.76);
-=======
     padding: 1.3rem;
-  }
-
-  .topicHead {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-
-  .topicTitle {
-    margin: 0;
-    font-size: 1.45rem;
-    letter-spacing: -0.01em;
-  }
-
-  .topicSub {
-    margin: .35rem 0 0 0;
-    color: rgba(0,0,0,.66);
-    line-height: 1.55;
+    margin-bottom: 2rem;
   }
 
   .topicPills {
     display: flex;
     flex-wrap: wrap;
     gap: .55rem;
+    margin-top: 1rem;
   }
 
   .topicPill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 999px;
     padding: .48rem .78rem;
     font-size: .92rem;
@@ -492,75 +192,27 @@ const stats = [
     border: 1px solid rgba(0,0,0,.10);
     background: white;
     color: rgba(0,0,0,.74);
-    transition: background .15s ease, border-color .15s ease, transform .15s ease;
   }
 
-  .topicPill:hover,
-  .topicPill:focus-visible,
   .topicPill.active {
     background: #111827;
-    border-color: #111827;
     color: white;
-    transform: translateY(-1px);
   }
 
   .topicResult {
     display: none;
-    border-radius: 20px;
-    border: 1px solid rgba(0,0,0,.07);
-    background: rgba(0,0,0,.02);
+    margin-top: 1.5rem;
     padding: 1rem;
+    background: rgba(0,0,0,.02);
+    border-radius: 20px;
   }
 
-  .topicResult.active {
-    display: block;
-  }
+  .topicResult.active { display: block; }
 
   .topicResultGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-  }
-
-  .miniList {
-    display: grid;
-    gap: .6rem;
-    margin-top: .75rem;
-  }
-
-  .miniLink,
-  .miniItem {
-    display: block;
-    border-radius: 16px;
-    padding: .75rem .85rem;
-    border: 1px solid rgba(0,0,0,.07);
-    background: white;
-    text-decoration: none;
-    color: rgba(0,0,0,.84);
-  }
-
-  .miniTitle {
-    margin: 0;
-    font-weight: 800;
-    line-height: 1.35;
-  }
-
-  .miniMeta {
-    margin: .22rem 0 0 0;
-    color: rgba(0,0,0,.6);
-    font-size: .93rem;
-    line-height: 1.35;
-  }
-
-  .emptyTopic {
-    margin: .75rem 0 0 0;
-    color: rgba(0,0,0,.62);
-    line-height: 1.55;
-  }
-
-  .projectCard.isHidden {
-    display: none;
->>>>>>> Stashed changes
   }
 
   .projectsGrid {
@@ -570,640 +222,178 @@ const stats = [
 
   .projectCard {
     border-radius: 24px;
-    background: rgba(255,255,255,.94);
+    background: white;
     border: 1px solid rgba(0,0,0,.06);
-    box-shadow: 0 12px 28px rgba(0,0,0,.07);
     padding: 1.5rem;
   }
 
+  .projectCard.isHidden { display: none; }
+
   .projectGrid {
     display: grid;
-    gap: 1.25rem;
-    grid-template-columns: 1.1fr .9fr;
-  }
-
-  .statusRow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .6rem;
-    margin-bottom: .8rem;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 1.5rem;
   }
 
   .badge {
     border-radius: 999px;
-    padding: .42rem .8rem;
-    font-size: .9rem;
-    border: 1px solid rgba(0,0,0,.08);
-    background: rgba(0,0,0,.03);
+    padding: .4rem .8rem;
+    font-size: .85rem;
     font-weight: 700;
+    background: #f3f4f6;
   }
 
-  .badgeActive {
-    background: #ecfdf5;
-    border-color: #bbf7d0;
-    color: #047857;
-  }
+  .badgeActive { background: #ecfdf5; color: #047857; }
 
-  .projectTitle {
-    margin: 0;
-    font-size: 1.7rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-
-  .projectText {
-    margin: .85rem 0 0 0;
-    color: rgba(0,0,0,.7);
-    line-height: 1.7;
-    font-size: 1rem;
-  }
-
-  .projectLink {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
+  .mediaContainer video, .mediaContainer img {
+    width: 100%;
     border-radius: 16px;
-    padding: .68rem .9rem;
-    text-decoration: none;
-    font-size: .95rem;
-    font-weight: 800;
-    border: 1px solid rgba(0,0,0,.10);
-    background: #111827;
-    color: white;
-    transition: transform .15s ease, background .15s ease;
-  }
-
-  .projectLink:hover,
-  .projectLink:focus-visible {
-    transform: translateY(-1px);
-    background: #1f2937;
+    margin-top: 1rem;
   }
 
   .publicationBlock {
     margin-top: 1rem;
-    border-radius: 18px;
-    border: 1px solid rgba(0,0,0,.07);
-    background: rgba(0,0,0,.02);
-    padding: .9rem;
-  }
-
-  .publicationList {
-    display: grid;
-    gap: .65rem;
-    margin-top: .7rem;
-  }
-
-  .publicationButton {
-    display: block;
-    border-radius: 14px;
-    padding: .75rem .85rem;
-    border: 1px solid rgba(0,0,0,.08);
-    background: white;
-    color: rgba(0,0,0,.86);
-    text-decoration: none;
-    transition: transform .15s ease, border-color .15s ease;
-  }
-
-  .publicationButton:hover,
-  .publicationButton:focus-visible {
-    transform: translateY(-1px);
-    border-color: rgba(0,0,0,.18);
-  }
-
-  .publicationTitle {
-    margin: 0;
-    font-size: .98rem;
-    font-weight: 800;
-    line-height: 1.4;
-  }
-
-  .publicationMeta {
-    margin: .24rem 0 0 0;
-    color: rgba(0,0,0,.58);
-    font-size: .92rem;
-    line-height: 1.35;
-  }
-
-  .tagRow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    margin-top: 1rem;
-  }
-
-  .tag {
-    border-radius: 999px;
-    padding: .38rem .75rem;
-    font-size: .9rem;
-    border: 1px solid rgba(0,0,0,.08);
-    background: white;
-    color: rgba(0,0,0,.72);
-  }
-
-  .metaGrid {
-    display: grid;
-    gap: .8rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 1rem;
-  }
-
-  .metaCard,
-  .sideCard {
-    border-radius: 20px;
-    border: 1px solid rgba(0,0,0,.06);
-    background: rgba(0,0,0,.02);
     padding: 1rem;
-  }
-
-  .metaLabel,
-  .sideLabel {
-    margin: 0;
-    font-size: .88rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: rgba(0,0,0,.5);
-    font-weight: 700;
-  }
-
-  .metaValue {
-    margin: .45rem 0 0 0;
-    font-size: 1rem;
-    font-weight: 700;
-  }
-
-  .sideStack {
-    display: grid;
-    gap: .9rem;
+    background: #f9fafb;
+    border-radius: 12px;
   }
 
   .memberLink {
     display: block;
+    padding: .5rem;
     text-decoration: none;
-    border-radius: 16px;
-    padding: .85rem 1rem;
-    background: white;
-    border: 1px solid rgba(0,0,0,.07);
-    transition: transform .15s ease, background .15s ease;
+    color: #111827;
+    border-bottom: 1px solid #eee;
   }
-
-  .memberLink:hover {
-    transform: translateY(-1px);
-    background: rgba(0,0,0,.02);
-  }
-
-  .memberName {
-    margin: 0;
-    font-size: .98rem;
-    font-weight: 700;
-    color: rgba(0,0,0,.88);
-  }
-
-  .memberRole {
-    margin: .25rem 0 0 0;
-    color: rgba(0,0,0,.62);
-    font-size: .93rem;
-  }
-
-  .progressList {
-    margin: .7rem 0 0 0;
-    padding-left: 1.1rem;
-    color: rgba(0,0,0,.68);
-    line-height: 1.7;
-  }
-
-  .footer {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 2.5rem 1.25rem;
-    color: rgba(0,0,0,.6);
-    font-size: 0.95rem;
-  }
-
-  .footerRow {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    border-top: 1px solid rgba(0,0,0,.08);
-    padding-top: 1.25rem;
-  }
-
-  .footerBrand {
-    display: inline-flex;
-    align-items: center;
-    gap: .6rem;
-  }
-
-  .footerLogo {
-    width: 28px;
-    height: 28px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 1px solid rgba(0,0,0,.08);
-    background: rgba(255,255,255,.8);
-  }
-
-  .footerLinks { display: flex; gap: .9rem; flex-wrap: wrap; }
-  .footerLinks a { color: rgba(0,0,0,.65); text-decoration: none; }
-  .footerLinks a:hover { text-decoration: underline; }
 
   @media (max-width: 1000px) {
-    .heroGrid,
-    .sectionGrid,
-    .projectGrid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 640px) {
-    h1 { font-size: 2.3rem; }
-    .hero { padding: 2rem 1.2rem; }
-    .wrap { padding: 1.5rem 1rem 2.2rem 1rem; }
-    .statsGrid,
-<<<<<<< Updated upstream
-    .miniGrid,
-    .metaGrid {
-=======
-    .metaGrid,
-    .topicResultGrid {
->>>>>>> Stashed changes
-      grid-template-columns: 1fr;
-    }
+    .heroGrid, .projectGrid, .topicResultGrid { grid-template-columns: 1fr; }
   }
 </style>
 
 <SiteLayout title="Projects | Systems Structural Biology Group">
-<main class="wrap">
-  <section class="hero">
-    <div class="heroGrid">
-      <div>
-        <p class="kicker">Systems Structural Biology Group</p>
-        <h1>Active Projects</h1>
-        <p class="sub">
-          A shared view of ongoing research, current progress, and project teams.
-          Each project includes summary information, current phase, recent progress,
-          and team members linked to the People page.
-        </p>
-
-        <div class="heroButtons">
-          <a href="#projects" class="btn btnPrimary">Browse projects</a>
-          <a href={`${base}/people`} class="btn btnSecondary">View people</a>
+  <main class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div>
+          <p class="kicker">Systems Structural Biology Group</p>
+          <h1>Active Projects</h1>
+          <p class="sub">Exploring the intersection of structural biology and human-centered AI.</p>
+          <div style="margin-top: 1.5rem;">
+            <a href="#projects" class="btn">Browse projects</a>
+          </div>
+        </div>
+        <div class="statsGrid">
+          {stats.map((stat) => (
+            <div class="statCard">
+              <p style="margin:0; font-size:.9rem; color:#666;">{stat.label}</p>
+              <p class="statValue">{stat.value}</p>
+            </div>
+          ))}
         </div>
       </div>
+    </section>
 
-<<<<<<< Updated upstream
-      <div class="statsGrid">
-        {stats.map((stat) => (
-          <div class="statCard">
-            <p class="statLabel">{stat.label}</p>
-            <p class="statValue">{stat.value}</p>
-          </div>
+    <section id="topic-map" class="topicMap">
+      <h2 style="margin:0;">Topic Map</h2>
+      <p>Filter projects and people by research area:</p>
+      <div class="topicPills">
+        {topicSummaries.map((topic) => (
+          <a class="topicPill" href={`?topic=${topic.slug}#topic-map`} data-topic-link={topic.slug} data-topic-label={topic.label}>
+            {topic.label}
+          </a>
         ))}
       </div>
-    </div>
-  </section>
 
-  <section id="overview" class="section">
-    <div class="sectionGrid">
-      <div class="card">
-        <p class="sectionKicker">Overview</p>
-        <h2 class="sectionTitle">How this page is organized</h2>
-        <p class="bodyText">
-          Each active project is presented as a structured card with summary information,
-          status, timeline, lead, recent updates, and associated personnel. Team members
-          are linked to the People page so visitors can move easily between project-level
-          and person-level information.
-        </p>
-
-        <div class="miniGrid">
-          <div class="miniCard">
-            <p class="miniTitle">What each project shows</p>
-            <p class="miniText">
-              Summary, current phase, status, timeline, lead, team members, and recent progress items.
-            </p>
-          </div>
-          <div class="miniCard">
-            <p class="miniTitle">Why it helps</p>
-            <p class="miniText">
-              Provides a clean public-facing overview of the lab’s ongoing work and who contributes to each effort.
-            </p>
+      {topicSummaries.map((topic) => (
+        <div class="topicResult" data-topic-result={topic.slug}>
+          <div class="topicResultGrid">
+            <div>
+              <strong>Projects:</strong>
+              {topic.projects.map(p => (
+                <div style="margin-top:5px;"><a href={`#${p.id}`}>{p.data.title}</a></div>
+              ))}
+            </div>
+            <div>
+              <strong>People:</strong>
+              {topic.people.map(person => (
+                <div style="margin-top:5px;"><a href={withBase(person.href)}>{person.name}</a></div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
+    </section>
 
-      <div class="card cardDark">
-        <p class="sectionKicker">Design goal</p>
-        <h2 class="sectionTitle">Project visibility</h2>
-        <p class="bodyText">
-          This page is intended to serve as a general active-projects hub for a lab website,
-          grant website, or public-facing project portfolio.
-        </p>
-
-        <div class="miniGrid">
-          <div class="miniCard">
-            <p class="miniTitle">Navigation</p>
-            <p class="miniText">Connected directly to individual bios.</p>
-          </div>
-          <div class="miniCard">
-            <p class="miniTitle">Use case</p>
-            <p class="miniText">Lab website, grant page, or project portfolio.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="section">
-    <div class="projectsGrid">
-      {projects.map((project) => (
-        <article class="projectCard" id={project.id}>
+    <div class="projectsGrid" id="projects">
+      {projectEntries.map((project) => (
+        <article class="projectCard" id={project.id} data-project-topics={projectTopicMap[project.id].join(" ")}>
           <div class="projectGrid">
             <div>
-              <div class="statusRow">
-                <span class="badge badgeActive">{project.status}</span>
-                <span class="badge">{project.phase}</span>
+              <div style="margin-bottom: 10px;">
+                <span class={`badge ${project.data.status === 'Active' ? 'badgeActive' : ''}`}>{project.data.status}</span>
+                <span class="badge" style="margin-left: 5px;">{project.data.phase}</span>
               </div>
-
-              <h2 class="projectTitle">{project.title}</h2>
-              <p class="projectText">{project.summary}</p>
-
-              <div class="tagRow">
-                {project.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
-
-              <div class="metaGrid">
-                <div class="metaCard">
-                  <p class="metaLabel">Timeline</p>
-                  <p class="metaValue">{project.timeline}</p>
+              <h2 style="margin:0;">{project.data.title}</h2>
+              <p>{project.data.summary}</p>
+              
+              {(project.data.video || project.data.thumbnail) && (
+                <div class="mediaContainer">
+                  {project.data.video ? (
+                    <video src={withBase(project.data.video)} controls muted loop playsinline />
+                  ) : (
+                    <img src={withBase(project.data.thumbnail)} alt={project.data.title} />
+                  )}
                 </div>
-                <div class="metaCard">
-                  <p class="metaLabel">Lead</p>
-                  <p class="metaValue">{project.lead}</p>
-                </div>
-              </div>
+              )}
             </div>
 
             <div class="sideStack">
-              <div class="sideCard">
-                <p class="sideLabel">Team members</p>
-                <div style="margin-top:.8rem; display:grid; gap:.65rem;">
-                  {project.team.map((member) => (
-                    <a href={withBase(member.href)} class="memberLink">
-                      <p class="memberName">{member.name}</p>
-                      <p class="memberRole">{member.role}</p>
-                    </a>
-                  ))}
+              <div class="statCard">
+                <strong>Team</strong>
+                {project.data.team.map((member) => (
+                  <a href={withBase(member.href)} class="memberLink">{member.name} — <small>{member.role}</small></a>
+                ))}
+              </div>
+              {project.data.updates && (
+                <div class="statCard" style="margin-top:10px;">
+                  <strong>Progress</strong>
+                  <ul style="padding-left:20px; margin-top:5px;">
+                    {project.data.updates.map(u => <li>{u}</li>)}
+                  </ul>
                 </div>
-              </div>
-
-              <div class="sideCard">
-                <p class="sideLabel">Recent progress</p>
-                <ul class="progressList">
-                  {project.updates.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </div>
           </div>
         </article>
       ))}
     </div>
-  </section>
-</main>
-=======
-    <section id="topic-map" class="section topicMap" data-topic-map>
-      <div class="topicHead">
-        <div>
-          <p class="kicker">Topic Map</p>
-          <h2 class="topicTitle" data-topic-heading>Choose a topic to see linked projects and people</h2>
-          <p class="topicSub">
-            The topic chips from the People page open this view and highlight the projects whose tags match that topic.
-          </p>
-        </div>
-
-        <div class="topicPills" aria-label="Project topics">
-          {topicSummaries.map((topic) => (
-            <a
-              class="topicPill"
-              href={`${withBase("/projects")}?topic=${topic.slug}#topic-map`}
-              data-topic-link={topic.slug}
-              data-topic-label={topic.label}
-            >
-              {topic.label}
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {topicSummaries.map((topic) => (
-        <div class="topicResult" data-topic-result={topic.slug} data-topic-label={topic.label}>
-          <div class="topicResultGrid">
-            <div>
-              <p class="sideLabel">Associated projects</p>
-              {topic.projects.length > 0 ? (
-                <div class="miniList">
-                  {topic.projects.map((project) => (
-                    <a class="miniLink" href={`#${project.id}`}>
-                      <p class="miniTitle">{project.data.title}</p>
-                      <p class="miniMeta">{project.data.phase} - Lead: {project.data.lead}</p>
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <p class="emptyTopic">No projects are tagged with this topic yet.</p>
-              )}
-            </div>
-
-            <div>
-              <p class="sideLabel">People on those projects</p>
-              {topic.people.length > 0 ? (
-                <div class="miniList">
-                  {topic.people.map((person) => (
-                    <a class="miniLink" href={withBase(person.href)}>
-                      <p class="miniTitle">{person.name}</p>
-                      <p class="miniMeta">{person.role}</p>
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <p class="emptyTopic">No people are associated through tagged projects yet.</p>
-              )}
-            </div>
-          </div>
-        </div>
-      ))}
-    </section>
-
-    <section id="projects" class="section">
-      <div class="projectsGrid">
-        {projectEntries.map((project) => (
-          <article class="projectCard" id={project.id} data-project-topics={projectTopicMap[project.id].join(" ")}>
-            <div class="projectGrid">
-              <div>
-                <div class="statusRow">
-                  <span class={`badge ${project.data.status === 'Active' ? 'badgeActive' : ''}`}>
-                    {project.data.status}
-                  </span>
-                  <span class="badge">{project.data.phase}</span>
-                </div>
-
-                <h2 class="projectTitle">{project.data.title}</h2>
-                <p class="projectText">{project.data.summary}</p>
-
-                {project.data.link && (
-                  <a class="projectLink" href={project.data.link} target="_blank" rel="noreferrer">
-                    {project.data.link_label ?? "Open project link"}
-                  </a>
-                )}
-
-                {project.data.publications && project.data.publications.length > 0 && (
-                  <div class="publicationBlock">
-                    <p class="sideLabel">Publications</p>
-                    <div class="publicationList">
-                      {project.data.publications.map((publication) => (
-                        <a
-                          class="publicationButton"
-                          href={publication.link}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <p class="publicationTitle">{publication.title}</p>
-                          <p class="publicationMeta">
-                            {[publication.venue, publication.year].filter(Boolean).join(" - ")}
-                          </p>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* --- MEDIA COMPONENT --- */}
-                {(project.data.video || project.data.thumbnail) && (
-                  <div class="mediaContainer">
-                    {project.data.video ? (
-                      <video 
-                        src={withBase(project.data.video)} 
-                        poster={project.data.thumbnail ? withBase(project.data.thumbnail) : undefined}
-                        controls 
-                        muted 
-                        loop
-                        playsinline
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    ) : (
-                      <img 
-                        src={withBase(project.data.thumbnail)} 
-                        alt={project.data.title} 
-                        loading="lazy" 
-                      />
-                    )}
-                  </div>
-                )}
-                {/* ----------------------- */}
-
-                {project.data.tags && (
-                  <div class="tagRow">
-                    {project.data.tags.map((tag) => (
-                      <span class="tag">{tag}</span>
-                    ))}
-                  </div>
-                )}
-
-                <div class="metaGrid">
-                  <div class="metaCard">
-                    <p class="metaLabel">Timeline</p>
-                    <p class="metaValue">{project.data.timeline}</p>
-                  </div>
-                  <div class="metaCard">
-                    <p class="metaLabel">Lead</p>
-                    <p class="metaValue">{project.data.lead}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="sideStack">
-                <div class="sideCard">
-                  <p class="sideLabel">Team members</p>
-                  <div style="margin-top:.8rem; display:grid; gap:.65rem;">
-                    {project.data.team.map((member) => (
-                      <a href={withBase(member.href)} class="memberLink">
-                        <p class="memberName">{member.name}</p>
-                        <p class="memberRole">{member.role}</p>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-                {project.data.updates && project.data.updates.length > 0 && (
-                  <div class="sideCard">
-                    <p class="sideLabel">Recent progress</p>
-                    <ul class="progressList">
-                      {project.data.updates.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
   </main>
 
   <script>
     const topicLinks = Array.from(document.querySelectorAll("[data-topic-link]"));
     const topicResults = Array.from(document.querySelectorAll("[data-topic-result]"));
     const projectCards = Array.from(document.querySelectorAll("[data-project-topics]"));
-    const topicHeading = document.querySelector("[data-topic-heading]");
-
-    const getSelectedTopic = () => new URLSearchParams(window.location.search).get("topic") || "";
 
     const showTopic = (topicSlug) => {
-      const selectedLink = topicLinks.find((link) => link.dataset.topicLink === topicSlug);
-      const selectedLabel = selectedLink?.dataset.topicLabel;
-
-      topicLinks.forEach((link) => {
-        link.classList.toggle("active", link.dataset.topicLink === topicSlug);
+      topicLinks.forEach(l => l.classList.toggle("active", l.dataset.topicLink === topicSlug));
+      topicResults.forEach(r => r.classList.toggle("active", r.dataset.topicResult === topicSlug));
+      projectCards.forEach(c => {
+        const topics = c.dataset.projectTopics.split(" ");
+        c.classList.toggle("isHidden", !!topicSlug && !topics.includes(topicSlug));
       });
-
-      topicResults.forEach((result) => {
-        result.classList.toggle("active", result.dataset.topicResult === topicSlug);
-      });
-
-      projectCards.forEach((card) => {
-        const topics = card.dataset.projectTopics?.split(" ").filter(Boolean) ?? [];
-        card.classList.toggle("isHidden", Boolean(topicSlug) && !topics.includes(topicSlug));
-      });
-
-      if (topicHeading) {
-        topicHeading.textContent = selectedLabel
-          ? `${selectedLabel}: projects and people`
-          : "Choose a topic to see linked projects and people";
-      }
     };
 
-    topicLinks.forEach((link) => {
-      link.addEventListener("click", (event) => {
-        const topicSlug = link.dataset.topicLink;
-        if (!topicSlug) return;
-
-        event.preventDefault();
-        const nextUrl = `${window.location.pathname}?topic=${topicSlug}#topic-map`;
-        window.history.pushState({}, "", nextUrl);
-        showTopic(topicSlug);
-        document.querySelector("#topic-map")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    topicLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const slug = link.dataset.topicLink;
+        showTopic(slug);
+        window.history.pushState({}, "", `?topic=${slug}#topic-map`);
       });
     });
 
-    window.addEventListener("popstate", () => showTopic(getSelectedTopic()));
-    showTopic(getSelectedTopic());
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("topic")) showTopic(urlParams.get("topic"));
   </script>
->>>>>>> Stashed changes
 </SiteLayout>
