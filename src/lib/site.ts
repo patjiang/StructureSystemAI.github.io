@@ -24,10 +24,13 @@ export const normalizeBase = (base = "/") => (base.endsWith("/") ? base : `${bas
 
 export const withBase = (base = "/", path = "") => {
   if (!path) return "";
-  if (/^(https?:)?\/\//.test(path) || path.startsWith("mailto:") || path.startsWith("#")) return path;
+  if (/^(https?:)?\/\//.test(path) || path.startsWith("mailto:") || path.startsWith("#")) {
+    return path;
+  }
   const normalizedBase = normalizeBase(base);
-  const cleaned = path.startsWith("/") ? path.slice(1) : path;
-  return `${normalizedBase}${cleaned}`;
+  const cleanedPath = path.startsWith("/") ? path.slice(1) : path;
+  const fullPath = `${normalizedBase}${cleanedPath}`;
+  return fullPath.replace(/^\/+/g, '/');
 };
 
 export const uploadPath = (base = "/", file = "") => {

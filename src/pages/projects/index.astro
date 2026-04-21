@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { withBase as withSiteBase } from "../../lib/site";
 import { getCollection } from "astro:content";
@@ -6,16 +7,7 @@ import { getCollection } from "astro:content";
 const base = import.meta.env.BASE_URL;
 const withBase = (path = "") => withSiteBase(base, path);
 
-// Fetching from content collections
 const projectEntries = await getCollection("projects");
-
-const topicDefinitions = [
-  { slug: "structural-biology", label: "Structural Biology", matchTags: ["Structural Biology", "Biophysics", "Structure Prediction", "Electrostatics"] },
-  { slug: "complex-systems", label: "Complex Systems", matchTags: ["Complex Systems", "Molecular Dynamics", "Brownian Dynamics", "Thermodynamic Ensembles", "MELD"] },
-  { slug: "multiscale-modeling", label: "Multiscale Modeling", matchTags: ["Multiscale Modeling", "Molecular Dynamics", "Brownian Dynamics", "MELD", "Thermodynamic Ensembles"] },
-  { slug: "applied-deep-learning", label: "Applied Deep Learning", matchTags: ["Applied Deep Learning", "Deep Learning", "SE3 Convolutional Networks"] },
-  { slug: "human-computer-interaction", label: "Human Computer Interaction", matchTags: ["Human Computer Interaction", "STEM Education"] },
-];
 
 const tagMatchesTopic = (tag = "", topic) => {
   const normalizedTag = tag.toLowerCase();
@@ -44,7 +36,7 @@ const topicSummaries = topicDefinitions.map((topic) => {
 
 const stats = [
   { label: "Active Projects", value: String(projectEntries.length) },
-  { label: "Research Areas", value: String(topicDefinitions.length) },
+  { label: "Research Areas", value: "6+" },
   { label: "Team Members", value: "10+" },
   { label: "Partner Sites", value: "Multi-site" },
 ];
@@ -54,7 +46,11 @@ const stats = [
   :global(html) { font-family: Arial, Helvetica, sans-serif; }
   :global(body) { background: #f6f7fb; margin: 0; color: rgba(0,0,0,.9); }
 
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 2.25rem 1.25rem 3rem; }
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2.25rem 1.25rem 3rem 1.25rem;
+  }
 
   .hero {
     border-radius: 26px; padding: 2.6rem 2rem;
@@ -70,45 +66,237 @@ const stats = [
   .sub { font-size: 1.16rem; line-height: 1.6; color: rgba(0,0,0,.72); max-width: 66ch; }
 
   .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: .82rem 1.1rem; border-radius: 18px; text-decoration: none;
-    font-weight: 700; background: #111827; color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .82rem 1.1rem;
+    border-radius: 18px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: .98rem;
+    border: 1px solid rgba(0,0,0,.10);
+    transition: transform .15s ease, background .15s ease;
   }
 
-  .statsGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .9rem; }
-  .statCard { border-radius: 22px; background: rgba(255,255,255,.94); border: 1px solid rgba(0,0,0,.06); padding: 1rem; }
-  .statValue { font-size: 2rem; font-weight: 800; margin: 0; }
-
-  .topicMap { border-radius: 24px; background: rgba(255,255,255,.94); border: 1px solid rgba(0,0,0,.06); padding: 1.3rem; margin-bottom: 2rem; }
-  .topicPills { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1rem; }
-  .topicPill { border-radius: 999px; padding: .48rem .78rem; font-size: .92rem; text-decoration: none; border: 1px solid rgba(0,0,0,.10); background: white; color: rgba(0,0,0,.74); }
-  .topicPill.active { background: #111827; color: white; }
-
-  .topicResult { display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,.02); border-radius: 20px; }
-  .topicResult.active { display: block; }
-  .topicResultGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-  .resultLink {
-    display: block; margin-top: 8px; padding: 10px 14px; background: white;
-    border: 1px solid rgba(0,0,0,0.08); border-radius: 12px;
-    text-decoration: none; color: #111827; font-size: 0.95rem; font-weight: 600;
-    transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  .btn:hover { transform: translateY(-1px); }
+  .btnPrimary {
+    background: #111827;
+    color: white;
+    border-color: #111827;
   }
-  .resultLink:hover { background: #f9fafb; border-color: rgba(0,0,0,0.15); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-  .resultLink small { display: block; font-weight: 400; color: #666; font-size: 0.85rem; margin-top: 2px; }
+  .btnSecondary {
+    background: white;
+    color: #111827;
+  }
 
-  .projectsGrid { display: grid; gap: 1.25rem; }
-  .projectCard { border-radius: 24px; background: white; border: 1px solid rgba(0,0,0,.06); padding: 1.5rem; }
-  .projectCard.isHidden { display: none; }
-  .projectGrid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1.5rem; }
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .9rem;
+  }
 
-  .badge { border-radius: 999px; padding: .4rem .8rem; font-size: .85rem; font-weight: 700; background: #f3f4f6; }
-  .badgeActive { background: #ecfdf5; color: #047857; }
-  .mediaContainer video, .mediaContainer img { width: 100%; border-radius: 16px; margin-top: 1rem; }
+  .statCard {
+    border-radius: 22px;
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    padding: 1rem;
+  }
 
-  .memberLink { display: block; padding: .5rem; text-decoration: none; color: #111827; border-bottom: 1px solid #eee; }
+  .statLabel {
+    font-size: .92rem;
+    color: rgba(0,0,0,.55);
+    margin: 0 0 .35rem 0;
+  }
 
-  @media (max-width: 1000px) { .heroGrid, .projectGrid, .topicResultGrid { grid-template-columns: 1fr; } }
+  .statValue {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .section {
+    margin-top: 1.7rem;
+  }
+
+  .projectsGrid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .projectCard {
+    border-radius: 24px;
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,.07);
+    padding: 1.5rem;
+  }
+
+  .projectGrid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1.1fr .9fr;
+  }
+
+  /* --- MEDIA STYLES --- */
+  .mediaContainer {
+    margin-top: 1.2rem;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(0,0,0,0.05);
+    line-height: 0;
+  }
+
+  .mediaContainer img, 
+  .mediaContainer video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  /* -------------------- */
+
+  .statusRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-bottom: .8rem;
+  }
+
+  .badge {
+    border-radius: 999px;
+    padding: .42rem .8rem;
+    font-size: .9rem;
+    border: 1px solid rgba(0,0,0,.08);
+    background: rgba(0,0,0,.03);
+    font-weight: 700;
+  }
+
+  .badgeActive {
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+    color: #047857;
+  }
+
+  .projectTitle {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .projectText {
+    margin: .85rem 0 0 0;
+    color: rgba(0,0,0,.7);
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+
+  .tagRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    border-radius: 999px;
+    padding: .38rem .75rem;
+    font-size: .9rem;
+    border: 1px solid rgba(0,0,0,.08);
+    background: white;
+    color: rgba(0,0,0,.72);
+  }
+
+  .metaGrid {
+    display: grid;
+    gap: .8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1rem;
+  }
+
+  .metaCard,
+  .sideCard {
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,.06);
+    background: rgba(0,0,0,.02);
+    padding: 1rem;
+  }
+
+  .metaLabel,
+  .sideLabel {
+    margin: 0;
+    font-size: .88rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: rgba(0,0,0,.5);
+    font-weight: 700;
+  }
+
+  .metaValue {
+    margin: .45rem 0 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .sideStack {
+    display: grid;
+    gap: .9rem;
+  }
+
+  .memberLink {
+    display: block;
+    text-decoration: none;
+    border-radius: 16px;
+    padding: .85rem 1rem;
+    background: white;
+    border: 1px solid rgba(0,0,0,.07);
+    transition: transform .15s ease, background .15s ease;
+  }
+
+  .memberLink:hover {
+    transform: translateY(-1px);
+    background: rgba(0,0,0,.02);
+  }
+
+  .memberName {
+    margin: 0;
+    font-size: .98rem;
+    font-weight: 700;
+    color: rgba(0,0,0,.88);
+  }
+
+  .memberRole {
+    margin: .25rem 0 0 0;
+    color: rgba(0,0,0,.62);
+    font-size: .93rem;
+  }
+
+  .progressList {
+    margin: .7rem 0 0 0;
+    padding-left: 1.1rem;
+    color: rgba(0,0,0,.68);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1000px) {
+    .heroGrid,
+    .projectGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 2.3rem; }
+    .hero { padding: 2rem 1.2rem; }
+    .wrap { padding: 1.5rem 1rem 2.2rem 1rem; }
+    .statsGrid,
+    .metaGrid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <SiteLayout title="Projects | Systems Structural Biology Group">
@@ -116,15 +304,21 @@ const stats = [
     <section class="hero">
       <div class="heroGrid">
         <div>
-          <p style="text-transform: uppercase; letter-spacing: .16em; font-size: .92rem; color: rgba(0,0,0,.55);">Systems Structural Biology Group</p>
+          <p class="kicker">Systems Structural Biology Group</p>
           <h1>Active Projects</h1>
-          <p class="sub">Exploring the intersection of structural biology and human-centered AI.</p>
-          <div style="margin-top: 1.5rem;"><a href="#projects" class="btn">Browse projects</a></div>
+          <p class="sub">
+            A shared view of ongoing research, current progress, and project teams.
+          </p>
+          <div class="heroButtons">
+            <a href="#projects" class="btn btnPrimary">Browse projects</a>
+            <a href={withBase("people")} class="btn btnSecondary">View people</a>
+          </div>
         </div>
+
         <div class="statsGrid">
           {stats.map((stat) => (
             <div class="statCard">
-              <p style="margin:0; font-size:.9rem; color:#666;">{stat.label}</p>
+              <p class="statLabel">{stat.label}</p>
               <p class="statValue">{stat.value}</p>
             </div>
           ))}
@@ -132,60 +326,90 @@ const stats = [
       </div>
     </section>
 
-    <section id="topic-map" class="topicMap">
-      <h2 style="margin:0;">Topic Map</h2>
-      <p style="color: #666; margin-bottom: 1.5rem;">Filter projects and people by research area:</p>
-      
-      <div class="topicPills">
-        {topicSummaries.map((topic) => (
-          <a class="topicPill" href={`?topic=${topic.slug}#topic-map`} data-topic-link={topic.slug} data-topic-label={topic.label}>{topic.label}</a>
-        ))}
-      </div>
-
-      {topicSummaries.map((topic) => (
-        <div class="topicResult" data-topic-result={topic.slug}>
-          <div class="topicResultGrid">
-            <div>
-              <strong style="font-size: 0.8rem; text-transform: uppercase; color: #666;">Projects</strong>
-              {topic.projects.length > 0 ? topic.projects.map(p => (
-                <a href={`#${p.id}`} class="resultLink">{p.data.title}<small>{p.data.phase}</small></a>
-              )) : <p style="font-style: italic; color: #999; margin-top: 10px;">No projects found.</p>}
-            </div>
-            <div>
-              <strong style="font-size: 0.8rem; text-transform: uppercase; color: #666;">People</strong>
-              {topic.people.map(person => (
-                <a href={withBase(person.href)} class="resultLink">{person.name}<small>{person.role}</small></a>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </section>
-
-    <div class="projectsGrid" id="projects">
-      {projectEntries.map((project) => (
-        <article class="projectCard" id={project.id} data-project-topics={projectTopicMap[project.id].join(" ")}>
-          <div class="projectGrid">
-            <div>
-              <div style="margin-bottom: 10px;">
-                <span class={`badge ${project.data.status === 'Active' ? 'badgeActive' : ''}`}>{project.data.status}</span>
-                <span class="badge" style="margin-left: 5px;">{project.data.phase}</span>
-              </div>
-              <h2 style="margin:0; font-size: 1.7rem;">{project.data.title}</h2>
-              <p style="line-height: 1.7; color: #444;">{project.data.summary}</p>
-              {(project.data.video || project.data.thumbnail) && (
-                <div class="mediaContainer">
-                  {project.data.video ? <video src={withBase(project.data.video)} controls muted loop playsinline /> 
-                                      : <img src={withBase(project.data.thumbnail)} alt={project.data.title} />}
+    <section id="projects" class="section">
+      <div class="projectsGrid">
+        {projectEntries.map((project) => (
+          <article class="projectCard" id={project.id}>
+            <div class="projectGrid">
+              <div>
+                <div class="statusRow">
+                  <span class={`badge ${project.data.status === 'Active' ? 'badgeActive' : ''}`}>
+                    {project.data.status}
+                  </span>
+                  <span class="badge">{project.data.phase}</span>
                 </div>
-              )}
-            </div>
-            <div class="sideStack">
-              <div class="statCard">
-                <strong>Team</strong>
-                {project.data.team.map((member) => (
-                  <a href={withBase(member.href)} class="memberLink">{member.name} — <small>{member.role}</small></a>
-                ))}
+
+                <h2 class="projectTitle">{project.data.title}</h2>
+                <p class="projectText">{project.data.summary}</p>
+
+                {/* --- MEDIA COMPONENT --- */}
+                {(project.data.video || project.data.thumbnail) && (
+                  <div class="mediaContainer">
+                    {project.data.video ? (
+                      <video 
+                        src={withBase(project.data.video)} 
+                        poster={project.data.thumbnail ? withBase(project.data.thumbnail) : undefined}
+                        controls 
+                        muted 
+                        loop
+                        playsinline
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img 
+                        src={withBase(project.data.thumbnail)} 
+                        alt={project.data.title} 
+                        loading="lazy" 
+                      />
+                    )}
+                  </div>
+                )}
+                {/* ----------------------- */}
+
+                {project.data.tags && (
+                  <div class="tagRow">
+                    {project.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                <div class="metaGrid">
+                  <div class="metaCard">
+                    <p class="metaLabel">Timeline</p>
+                    <p class="metaValue">{project.data.timeline}</p>
+                  </div>
+                  <div class="metaCard">
+                    <p class="metaLabel">Lead</p>
+                    <p class="metaValue">{project.data.lead}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sideStack">
+                <div class="sideCard">
+                  <p class="sideLabel">Team members</p>
+                  <div style="margin-top:.8rem; display:grid; gap:.65rem;">
+                    {project.data.team.map((member) => (
+                      <a href={withBase(member.href)} class="memberLink">
+                        <p class="memberName">{member.name}</p>
+                        <p class="memberRole">{member.role}</p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {project.data.updates && project.data.updates.length > 0 && (
+                  <div class="sideCard">
+                    <p class="sideLabel">Recent progress</p>
+                    <ul class="progressList">
+                      {project.data.updates.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               {project.data.updates && (
                 <div class="statCard" style="margin-top:10px;">
@@ -196,33 +420,9 @@ const stats = [
                 </div>
               )}
             </div>
-          </div>
-        </article>
-      ))}
-    </div>
+          </article>
+        ))}
+      </div>
+    </section>
   </main>
-
-  <script>
-    const topicLinks = Array.from(document.querySelectorAll("[data-topic-link]"));
-    const topicResults = Array.from(document.querySelectorAll("[data-topic-result]"));
-    const projectCards = Array.from(document.querySelectorAll("[data-project-topics]"));
-    const showTopic = (topicSlug) => {
-      topicLinks.forEach(l => l.classList.toggle("active", l.dataset.topicLink === topicSlug));
-      topicResults.forEach(r => r.classList.toggle("active", r.dataset.topicResult === topicSlug));
-      projectCards.forEach(c => {
-        const topics = (c as HTMLElement).dataset.projectTopics?.split(" ") || [];
-        c.classList.toggle("isHidden", !!topicSlug && !topics.includes(topicSlug));
-      });
-    };
-    topicLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const slug = (link as HTMLElement).dataset.topicLink || "";
-        showTopic(slug);
-        window.history.pushState({}, "", `?topic=${slug}#topic-map`);
-      });
-    });
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("topic")) showTopic(urlParams.get("topic") || "");
-  </script>
 </SiteLayout>

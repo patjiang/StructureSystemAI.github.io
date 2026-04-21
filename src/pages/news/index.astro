@@ -209,7 +209,7 @@ const assetPath = (path = "") => uploadPath(base, path);
                 ))}
               </div>
             )}
-            <a class="btn" href={`${base}/news/${featured.slug}`}>Read article</a>
+            <a class="btn" href={`${base}news/${featured.slug}`}>Read article</a>
           </div>
 
           <div class="featuredMedia">
@@ -230,7 +230,7 @@ const assetPath = (path = "") => uploadPath(base, path);
         <div class="listGrid">
           {remaining.map((entry) => (
             <article class="newsCard">
-              <a href={`${base}/news/${entry.slug}`}>
+              <a href={`${base}news/${entry.slug}`}>
                 <h2 class="newsTitle">{entry.data.title}</h2>
               </a>
               <div class="meta">

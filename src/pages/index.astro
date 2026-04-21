@@ -169,42 +169,61 @@ const quickLinks = [
   }
 </style>
 
-<SiteLayout title="Contact | Systems Structural Biology Group">
-  <main class="wrap">
-    <section class="hero">
-      <p class="kicker">Contact</p>
-      <h1>Get in touch with the lab.</h1>
-      <p class="lead">
-        Reach out for collaboration opportunities, research questions, recruiting inquiries,
-        or general information about the Systems Structural Biology Group.
+<SiteLayout title="Systems Structural Biology Group">
+<main class="wrap">
+  <section class="hero">
+    <p class="kicker">Systems Structural Biology Group</p>
+    <h1>Human-centered AI science for structural discovery and complex systems.</h1>
+    <p class="lead">
+      We build trustworthy computational methods that connect protein structure, molecular dynamics, and human decision-making. 
+      Our tools span across structural biology, applied deep learning, and adaptive AI systems at the human-computer interface.
+    </p>
+
+    <div class="chips">
+      <span class="chip">Structural biology</span>
+      <span class="chip">Complex systems</span>
+      <span class="chip">Human-centered data science</span>
+      <span class="chip">Nonlinear dynamics</span>
+      <span class="chip">Interpretable AI</span>
+    </div>
+
+    <div class="ctaRow">
+      <a class="btn primary" href={`${base}research`}>Explore Research</a>
+      <a class="btn" href={`${base}people`}>Meet the Team</a>
+      <a class="btn" href={`${base}join`}>Join the Lab</a>
+    </div>
+  </section>
+
+  <section class="grid" aria-label="Home content">
+    <div class="card">
+      <h2>What we do</h2>
+      <p>
+        We unify simulation, learning, and human-centered design to study complex biological and sociotechnical systems.
+        Our work spans molecular modeling and structural analysis, data-driven inference, and adaptive decision support.
       </p>
-    </section>
+      <ul class="list">
+        <li><strong>Structural biology & modeling:</strong> molecular simulation, multiscale structure–function analysis.</li>
+        <li><strong>AI + data science:</strong> statistical learning, reliable inference, uncertainty-aware modeling.</li>
+        <li><strong>Complex systems:</strong> dynamical systems methods and interpretable metrics for behavior over time.</li>
+        <li><strong>Human-centered AI:</strong> usable, trustworthy tools for learning, health, and operational contexts.</li>
+      </ul>
+    </div>
 
-    <section class="grid">
-      <div class="stack">
-        <article class="card">
-          <h2>Contact methods</h2>
-          <div class="contactList">
-            {contactMethods.map((item) => (
-              <div class="contactItem">
-                <p class="contactLabel">{item.label}</p>
-                <a href={item.href}>
-                  <p class="contactValue">{item.value}</p>
-                </a>
-                <p class="contactDetail">{item.detail}</p>
-              </div>
-            ))}
-          </div>
-        </article>
+    <div class="mini">
+      <div class="stat">
+        <p class="label">Mission</p>
+        <p class="value">Trustworthy, usable AI for discovery</p>
+        <p class="desc">
+          Build human-centered AI and data science that turns complex signals into reliable insight and deployable tools.
+        </p>
+      </div>
 
-        <article class="card">
-          <h2>Prospective students and collaborators</h2>
-          <p>
-            If you are interested in joining the lab or starting a collaboration, it helps to include
-            a short message about your interests, background, and the kind of work you would like to discuss.
-          </p>
-          <a class="btn" href={withBase("/join")}>See joining information</a>
-        </article>
+      <div class="stat">
+        <p class="label">Vision</p>
+        <p class="value">Interpretability at scale</p>
+        <p class="desc">
+          We hope to drive innovation by demistifying the underpinnings of complex AI/ML workflows and biological systems.
+        </p>
       </div>
 
       <div class="stack">
