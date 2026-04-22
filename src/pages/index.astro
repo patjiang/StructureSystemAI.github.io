@@ -26,6 +26,55 @@ const quickLinks = [
   { label: "Projects", href: withBase("/projects") },
   { label: "News", href: withBase("/news") },
 ];
+
+const missionVision = [
+  {
+    title: "Mission",
+    text:
+      "We advance inclusive, public-value discovery by using structural biology, multiscale modeling, and AI to understand living systems and translate molecular insight into tools for health, education, and society."
+  },
+  {
+    title: "Vision",
+    text:
+      "Inspired by ASU's charter and the Biodesign Institute's transdisciplinary model, we aim to build a collaborative lab where scientists cross boundaries, learn together, and design nature-inspired solutions for urgent challenges in health, sustainability, and security."
+  }
+];
+
+const motionCards = [
+  {
+    title: "Folding",
+    body1:
+      "Protein sequences encode more than stationary structures seen in databanks; they encode an ensemble of molecular movements whose landscape determines function.",
+    body2:
+      "Tracking these motions offers a new lens on evolution and opens pathways toward engineering protein movements beyond nature.",
+    image: "uploads/folding-protein-darpa-program-nodes.gif",
+    alt: "Folding landscape of disordered proteins on the surface of protein supercomplexes.",
+    caption:
+      "Folding landscape of disordered proteins on protein supercomplexes."
+  },
+  {
+    title: "Binding",
+    body1:
+      "Diffusion-driven protein-protein interactions create rate-determining bottlenecks in biological functions such as signaling, recognition, and pathogenicity.",
+    body2:
+      "These pathways can be engineered to study infectivity and to guide the design of medical countermeasures.",
+    image: "uploads/binding-protein-darpa-program-nodes-2025.gif",
+    alt: "Binding of chemokine proteins on surface of the SARS-CoV2 ChAdOX vaccine vector.",
+    caption:
+      "Chemokine binding on the ChAdOx vaccine vector surface."
+  },
+  {
+    title: "Cooperativity",
+    body1:
+      "Beyond internal dynamics, protein function depends on modifications and environmental changes through cooperative and allosteric coupling that can also be chemomechanical.",
+    body2:
+      "Cooperativity controls protein movements in cellular environments and can be harnessed for biomolecular engineering and manufacturing benefits.",
+    image: "uploads/cooperativity-protein-darpa-program-nodes.gif",
+    alt: "Proton-motive force driven coupled rotation in integral-membrane molecular motors.",
+    caption:
+      "Coupled rotation in integral-membrane molecular motors."
+  }
+];
 ---
 
 <style>
@@ -59,10 +108,33 @@ const quickLinks = [
   }
   .lead{
     margin: .9rem 0 0;
-    max-width: 70ch;
+    max-width: 82ch;
     color: rgba(0,0,0,.72);
     line-height: 1.68;
     font-size: 1.15rem;
+  }
+  .missionGrid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  .missionCard{
+    border-radius: 22px;
+    background: rgba(255,255,255,.86);
+    border: 1px solid rgba(0,0,0,.07);
+    padding: 1.15rem;
+  }
+  .missionCard h2{
+    margin: 0 0 .45rem;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .missionCard p{
+    margin: 0;
+    color: rgba(0,0,0,.72);
+    line-height: 1.65;
+    font-size: 1.02rem;
   }
 
   .grid{
@@ -159,8 +231,95 @@ const quickLinks = [
     color: rgba(255,255,255,.96);
   }
 
+  .motionSection{
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .motionHeader{
+    margin-top: 1rem;
+  }
+  .motionHeader h2{
+    margin: 0 0 .35rem 0;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+  }
+  .motionHeader p{
+    margin: 0;
+    color: rgba(0,0,0,.68);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 72ch;
+  }
+
+  .motionCard{
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(245,246,250,.98), rgba(239,241,246,.98));
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,.06);
+    padding: 1.5rem;
+  }
+
+  .motionGrid{
+    display: grid;
+    grid-template-columns: minmax(260px, 360px) 1fr;
+    gap: 1.35rem;
+    align-items: start;
+  }
+
+  .motionGrid.reverse{
+    grid-template-columns: 1fr minmax(260px, 360px);
+  }
+
+  .motionMedia{
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+  }
+
+  .motionImage{
+    width: 100%;
+    border-radius: 14px;
+    border-style: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    display: block;
+    background: white;
+  }
+
+  .motionCaption{
+    margin: 0;
+    font-size: .97rem;
+    line-height: 1.45;
+    color: rgba(0,0,0,.56);
+    font-style: italic;
+  }
+
+  .motionText h3{
+    margin: .2rem 0 .7rem 0;
+    font-size: 2rem;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .motionText p{
+    margin: 0 0 1rem 0;
+    font-size: 1.08rem;
+    line-height: 1.62;
+    color: rgba(0,0,0,.78);
+    max-width: 34ch;
+  }
+
   @media (max-width: 980px){
     .grid{ grid-template-columns: 1fr; }
+    .missionGrid{ grid-template-columns: 1fr; }
+    .motionGrid,
+    .motionGrid.reverse{
+      grid-template-columns: 1fr;
+    }
+    .motionText p{
+      max-width: none;
+    }
   }
   @media (max-width: 640px){
     .wrap{ padding: 1.6rem 1rem 2.8rem; }
@@ -169,49 +328,68 @@ const quickLinks = [
   }
 </style>
 
-<<<<<<< Updated upstream
 <SiteLayout title="Systems Structural Biology Group">
-<main class="wrap">
-  <section class="hero">
-    <p class="kicker">Systems Structural Biology Group</p>
-    <h1>Human-centered AI science for structural discovery and complex systems.</h1>
-    <p class="lead">
-      We build trustworthy computational methods that connect molecular structure, dynamics, and human decision-making,
-      spanning structural biology, data science, and adaptive AI systems designed for real users.
-    </p>
-
-    <div class="chips">
-      <span class="chip">Structural biology</span>
-      <span class="chip">Complex systems</span>
-      <span class="chip">Human-centered data science</span>
-      <span class="chip">Nonlinear dynamics</span>
-      <span class="chip">Interpretable AI</span>
-    </div>
-
-    <div class="ctaRow">
-      <a class="btn primary" href={`${base}/research`}>Explore Research</a>
-      <a class="btn" href={`${base}/people`}>Meet the Team</a>
-      <a class="btn" href={`${base}/join`}>Join the Lab</a>
-    </div>
-  </section>
-
-  <section class="grid" aria-label="Home content">
-    <div class="card">
-      <h2>What we do</h2>
-      <p>
-        We unify simulation, learning, and human-centered design to study complex biological and sociotechnical systems.
-        Our work spans molecular modeling and structural analysis, data-driven inference, and adaptive decision support.
-=======
-<SiteLayout title="Contact | Systems Structural Biology Group">
   <main class="wrap">
     <section class="hero">
-      <p class="kicker">Contact</p>
-      <h1>Get in touch with the lab.</h1>
+      <p class="kicker">Lab mission & vision</p>
+      <h1>Inclusive structural biology for public-value discovery.</h1>
       <p class="lead">
-        Reach out for collaboration opportunities, research questions, recruiting inquiries,
-        or general information about the Systems Structural Biology Group.
->>>>>>> Stashed changes
+        The Systems Structural Biology Group blends ASU's commitment to inclusive success and
+        research of public value with the Biodesign Institute's collaborative, nature-inspired
+        approach to solving global challenges.
       </p>
+      <div class="missionGrid">
+        {missionVision.map((item) => (
+          <article class="missionCard">
+            <h2>{item.title}</h2>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="motionSection" aria-label="Protein understanding in motion">
+      <div class="motionHeader">
+        <p class="kicker">Molecular behaviors</p>
+        <h2>Building protein understanding in motion</h2>
+        <p>
+          We study protein behavior not only as static structure, but as motion, interaction,
+          and cooperative response. These animated examples illustrate folding landscapes,
+          diffusion-driven binding, and collective allosteric dynamics.
+        </p>
+      </div>
+
+      {motionCards.map((card, index) => (
+        <article class="motionCard">
+          <div class={`motionGrid ${index === 1 ? "reverse" : ""}`}>
+            {index === 1 ? (
+              <>
+                <div class="motionText">
+                  <h3>{card.title}</h3>
+                  <p>{card.body1}</p>
+                  <p>{card.body2}</p>
+                </div>
+                <div class="motionMedia">
+                  <img class="motionImage" src={withBase(card.image)} alt={card.alt} loading="lazy" />
+                  <p class="motionCaption">{card.caption}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="motionMedia">
+                  <img class="motionImage" src={withBase(card.image)} alt={card.alt} loading="lazy" />
+                  <p class="motionCaption">{card.caption}</p>
+                </div>
+                <div class="motionText">
+                  <h3>{card.title}</h3>
+                  <p>{card.body1}</p>
+                  <p>{card.body2}</p>
+                </div>
+              </>
+            )}
+          </div>
+        </article>
+      ))}
     </section>
 
     <section class="grid">
@@ -241,15 +419,6 @@ const quickLinks = [
         </article>
       </div>
 
-<<<<<<< Updated upstream
-      <div class="stat">
-        <p class="label">Vision</p>
-        <p class="value">Interpretability at scale</p>
-        <p class="desc">
-          Enable scientific and operational teams to understand, communicate, and act on complex systems with confidence.
-        </p>
-      </div>
-=======
       <div class="stack">
         <article class="card">
           <h2>Quick links</h2>
@@ -265,7 +434,6 @@ const quickLinks = [
             ))}
           </div>
         </article>
->>>>>>> Stashed changes
 
         <article class="card">
           <h2>Primary email</h2>

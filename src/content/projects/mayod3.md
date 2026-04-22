@@ -1,0 +1,30 @@
+---
+title: "Mayo Moonshot (D3)"
+status: "Active"
+phase: "In-Vitro Validation"
+summary: "The goal of the D3 moonshot project is to create anti-dimerization binders for FGFR systems using state-of-the-art binder generation methods along with cutting edge simulation methods"
+tags: ["Applied Deep Learning", "Biophysics", "MELD", "Thermodynamic Ensembles", "Brownian Dynamics"]
+video: "/uploads/brownian_dynamics_short.mp4"
+timeline: "2025–2027"
+lead: "Abhishek Singharoy, Mitesh Borad"
+team:
+  - name: "Abhishek Singharoy"
+    role: "PI"
+    href: "people#abhishek-singharoy"
+  - name: "Mitesh Borad"
+    role: "PI"
+    href: "collab#mitesh-borad"
+  - name: "Soumya Dutta"
+    role: "PhD Student"
+    href: "people#soumya-dutta"
+  - name: "Patrick Jiang"
+    role: "Graduate Student"
+    href: "people#patrick-jiang"
+  - name: "Paarth Batra"
+    role: "ML Engineer"
+    href: "people#paarth-batra"
+updates:
+  - "Finished generation of binders"
+  - "Starting large-scale BD simulations for validation"
+  - "Setting up wet-lab for protein purification"
+---

@@ -68,23 +68,20 @@ function publicationKey(publication) {
 }
 
 function buildTweetText(publication) {
-  const hashtags = "#StructuralBiology #AI #Biophysics";
   const parts = [
-    "New publication from @abhisekhsingha1's lab",
+    "New publication",
     `${publication.title}`,
     publication.venue ? `${publication.venue} (${publication.year})` : String(publication.year),
     publication.link,
-    hashtags,
   ];
 
   let text = parts.join("\n");
   if (text.length <= 280) return text;
 
   const reservedLength =
-    "New publication from @abhisekhsingha1's lab\n\n\n\n".length +
+    "New publication\n\n\n".length +
     (publication.venue ? `${publication.venue} (${publication.year})`.length : String(publication.year).length) +
-    publication.link.length +
-    hashtags.length;
+    publication.link.length;
 
   const availableTitleLength = Math.max(40, 280 - reservedLength - 6);
   const trimmedTitle =
@@ -93,11 +90,10 @@ function buildTweetText(publication) {
       : publication.title;
 
   text = [
-    "New publication from @abhisekhsingha1's lab",
+    "New publication",
     trimmedTitle,
     publication.venue ? `${publication.venue} (${publication.year})` : String(publication.year),
     publication.link,
-    hashtags,
   ].join("\n");
 
   return text.slice(0, 280);

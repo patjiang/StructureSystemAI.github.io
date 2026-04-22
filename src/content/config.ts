@@ -24,9 +24,8 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     status: z.enum(["Active", "Completed"]).default("Active"),
+    phase: z.string(),
     summary: z.string(),
-<<<<<<< Updated upstream
-=======
     link: z.string().optional(),
     link_label: z.string().optional(),
     publications: z
@@ -41,10 +40,17 @@ const projects = defineCollection({
       .optional(),
     video: z.string().optional(),
     thumbnail: z.string().optional(),
->>>>>>> Stashed changes
     tags: z.array(z.string()).optional(),
-    links: z.array(z.string()).optional(),
-    team: z.array(z.string()).optional(),
+    timeline: z.string(),
+    lead: z.string(),
+    team: z.array(
+      z.object({
+        name: z.string(),
+        role: z.string(),
+        href: z.string(),
+      })
+    ),
+    updates: z.array(z.string()).optional(),
     share_to_x: z.boolean().default(false),
   }),
 });
